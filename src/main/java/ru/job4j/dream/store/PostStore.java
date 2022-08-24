@@ -2,15 +2,20 @@ package ru.job4j.dream.store;
 
 import ru.job4j.dream.model.Post;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class PostStore {
 
     private static final PostStore INST = new PostStore();
 
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
+
+    private final AtomicInteger id = new AtomicInteger(4);
 
     private PostStore() {
         posts.put(1, new Post(1,
@@ -34,6 +39,8 @@ public class PostStore {
     }
 
     public Post add(Post post) {
+        post.setId(id.getAndIncrement());
+        post.setCreated(Timestamp.valueOf(LocalDateTime.now()));
         return posts.put(post.getId(), post);
     }
 }
