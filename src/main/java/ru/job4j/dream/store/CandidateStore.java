@@ -2,15 +2,20 @@ package ru.job4j.dream.store;
 
 import ru.job4j.dream.model.Candidate;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CandidateStore {
 
     private static final CandidateStore INST = new CandidateStore();
 
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
+
+    private final AtomicInteger id = new AtomicInteger(4);
 
     private CandidateStore() {
         candidates.put(1, new Candidate(1,
@@ -31,5 +36,19 @@ public class CandidateStore {
 
     public Collection<Candidate> findAll() {
         return candidates.values();
+    }
+
+    public Candidate add(Candidate candidate) {
+        candidate.setId(id.getAndIncrement());
+        candidate.setCreated(Timestamp.valueOf(LocalDateTime.now()));
+        return candidates.put(candidate.getId(), candidate);
+    }
+
+    public Candidate findById(int id) {
+        return candidates.get(id);
+    }
+
+    public Candidate update(Candidate candidate) {
+        return candidates.replace(candidate.getId(), candidate);
     }
 }

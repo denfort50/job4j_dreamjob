@@ -7,15 +7,15 @@ import java.util.Objects;
 public class Candidate {
     private int id;
     private String name;
-    private String desc;
+    private String description;
     private Timestamp created;
 
     public Candidate() { }
 
-    public Candidate(int id, String name, String desc) {
+    public Candidate(int id, String name, String description) {
         this.id = id;
         this.name = name;
-        this.desc = desc;
+        this.description = description;
         this.created = Timestamp.valueOf(LocalDateTime.now());
     }
 
@@ -35,12 +35,12 @@ public class Candidate {
         this.name = name;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Timestamp getCreated() {
