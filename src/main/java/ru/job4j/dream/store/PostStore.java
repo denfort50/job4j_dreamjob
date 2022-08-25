@@ -1,9 +1,6 @@
 package ru.job4j.dream.store;
 
 import ru.job4j.dream.model.Post;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -40,7 +37,6 @@ public class PostStore {
 
     public Post add(Post post) {
         post.setId(id.getAndIncrement());
-        post.setCreated(Timestamp.valueOf(LocalDateTime.now()));
         return posts.put(post.getId(), post);
     }
 

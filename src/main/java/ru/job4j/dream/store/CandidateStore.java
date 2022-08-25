@@ -1,9 +1,6 @@
 package ru.job4j.dream.store;
 
 import ru.job4j.dream.model.Candidate;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -40,7 +37,6 @@ public class CandidateStore {
 
     public Candidate add(Candidate candidate) {
         candidate.setId(id.getAndIncrement());
-        candidate.setCreated(Timestamp.valueOf(LocalDateTime.now()));
         return candidates.put(candidate.getId(), candidate);
     }
 
