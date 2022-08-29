@@ -10,6 +10,7 @@ public class Post implements Serializable {
     private String description;
     private final LocalDateTime created = LocalDateTime.now();
     private boolean visible;
+    private City city;
 
     public Post() { }
 
