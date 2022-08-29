@@ -1,6 +1,7 @@
 package ru.job4j.dream.store;
 
 import net.jcip.annotations.ThreadSafe;
+import org.springframework.stereotype.Repository;
 import ru.job4j.dream.model.Candidate;
 import java.util.Collection;
 import java.util.Map;
@@ -8,9 +9,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @ThreadSafe
+@Repository
 public class CandidateStore {
-
-    private static final CandidateStore INST = new CandidateStore();
 
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
 
@@ -27,10 +27,6 @@ public class CandidateStore {
         candidates.put(3, new Candidate(3,
                 "John Wick",
                 "Senior Java Developer"));
-    }
-
-    public static CandidateStore instOf() {
-        return INST;
     }
 
     public Collection<Candidate> findAll() {
