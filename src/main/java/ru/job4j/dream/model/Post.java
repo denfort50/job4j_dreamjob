@@ -1,13 +1,15 @@
 package ru.job4j.dream.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Post {
+public class Post implements Serializable {
     private int id;
     private String name;
     private String description;
     private final LocalDateTime created = LocalDateTime.now();
+    private boolean visible;
 
     public Post() { }
 
@@ -43,6 +45,14 @@ public class Post {
 
     public LocalDateTime getCreated() {
         return created;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     @Override
