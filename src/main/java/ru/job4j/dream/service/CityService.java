@@ -11,8 +11,8 @@ public class CityService {
 
     public CityService() {
         cities.put(1, new City(1, "Москва"));
-        cities.put(2, new City(2, "СПб"));
-        cities.put(3, new City(3, "Екб"));
+        cities.put(2, new City(2, "Санкт-Петербург"));
+        cities.put(3, new City(3, "Екатеринбург"));
     }
 
     public List<City> getAllCities() {

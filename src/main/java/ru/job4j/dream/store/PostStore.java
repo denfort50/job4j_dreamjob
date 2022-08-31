@@ -2,6 +2,7 @@ package ru.job4j.dream.store;
 
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
+import ru.job4j.dream.model.City;
 import ru.job4j.dream.model.Post;
 import java.util.Collection;
 import java.util.Map;
@@ -17,9 +18,9 @@ public class PostStore {
     private final AtomicInteger id = new AtomicInteger(4);
 
     private PostStore() {
-        posts.put(1, new Post(1, "Junior Java Job", "Saint-Petersburg, full-time office"));
-        posts.put(2, new Post(2, "Middle Java Job", "Samara, part-time office"));
-        posts.put(3, new Post(3, "Senior Java Job", "Moscow, remote"));
+        posts.put(1, new Post(1, "Junior Java Job", "Full-time office", new City(1, "Москва")));
+        posts.put(2, new Post(2, "Middle Java Job", "Part-time office", new City(2, "Санкт-Петербург")));
+        posts.put(3, new Post(3, "Senior Java Job", "Remote", new City(3, "Екатеринбург")));
     }
 
     public Collection<Post> findAll() {
