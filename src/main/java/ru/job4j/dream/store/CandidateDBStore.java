@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CandidateDbStore {
+public class CandidateDBStore {
 
     private static final String SELECT_ALL_CANDIDATES = "SELECT * FROM candidate ORDER BY id";
     private static final String INSERT_CANDIDATE = "INSERT INTO candidate(name, description, created, photo) VALUES (?, ?, ?, ?)";
@@ -22,7 +22,7 @@ public class CandidateDbStore {
 
     private final BasicDataSource pool;
 
-    public CandidateDbStore(BasicDataSource pool) {
+    public CandidateDBStore(BasicDataSource pool) {
         this.pool = pool;
     }
 
