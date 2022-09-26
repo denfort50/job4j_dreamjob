@@ -4,7 +4,6 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
-import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.User;
 
 import java.util.ArrayList;
@@ -44,17 +43,23 @@ public class UserDBStore {
     }
 
     public Optional<User> add(User user) {
+        Optional<User> result = Optional.empty();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(INSERT_USER, PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPassword());
             ps.execute();
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    user.setId(generatedKeys.getInt(1));
+                }
+                result = Optional.of(user);
+            }
         } catch (SQLException e) {
             LOG.error("SQLException", e);
-            return Optional.empty();
         }
-        return Optional.of(user);
+        return result;
     }
 
     private User createUser(ResultSet rs) throws SQLException {
