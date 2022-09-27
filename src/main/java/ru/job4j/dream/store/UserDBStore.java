@@ -17,6 +17,7 @@ public class UserDBStore {
 
     private static final String SELECT_ALL_USERS = "SELECT * FROM users ORDER BY id";
     private static final String INSERT_USER = "INSERT INTO users(email, password) VALUES (?, ?)";
+    private static final String SELECT_USER_BY_EMAIL_AND_PWD = "SELECT * FROM users WHERE email = ? AND password = ?";
 
     private static final Logger LOG = LogManager.getLogger(PostDBStore.class.getName());
 
@@ -55,6 +56,24 @@ public class UserDBStore {
                     user.setId(generatedKeys.getInt(1));
                 }
                 result = Optional.of(user);
+            }
+        } catch (SQLException e) {
+            LOG.error("SQLException", e);
+        }
+        return result;
+    }
+
+    public Optional<User> findUserByEmailAndPwd(String email, String password) {
+        Optional<User> result = Optional.empty();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement(SELECT_USER_BY_EMAIL_AND_PWD)
+        ) {
+            ps.setString(1, email);
+            ps.setString(2, password);
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    result = Optional.of(createUser(it));
+                }
             }
         } catch (SQLException e) {
             LOG.error("SQLException", e);
