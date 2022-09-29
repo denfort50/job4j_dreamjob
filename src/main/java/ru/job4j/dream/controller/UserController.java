@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.dream.model.User;
 import ru.job4j.dream.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @ThreadSafe
@@ -23,8 +25,14 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public String users(Model model) {
+    public String users(Model model, HttpSession session) {
         model.addAttribute("users", userService.findAll());
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setEmail("Гость");
+        }
+        model.addAttribute("user", user);
         return "users";
     }
 
@@ -61,12 +69,22 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute User user) {
-        Optional<User> userDb = userService.findUserByEmailAndPwd(user.getEmail(), user.getPassword());
+    public String login(@ModelAttribute User user, HttpServletRequest req) {
+        Optional<User> userDb = userService.findUserByEmailAndPwd(
+                user.getEmail(), user.getPassword()
+        );
         if (userDb.isEmpty()) {
             return "redirect:/loginPage?fail=true";
         }
+        HttpSession session = req.getSession();
+        session.setAttribute("user", userDb.get());
         return "redirect:/index";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/loginPage";
     }
 
 }
