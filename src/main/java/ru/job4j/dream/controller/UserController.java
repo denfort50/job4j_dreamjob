@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.dream.model.User;
 import ru.job4j.dream.service.UserService;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
+
+import static ru.job4j.dream.controller.UserAttributeAdder.addAttributeUser;
 
 @ThreadSafe
 @Controller
@@ -27,12 +28,7 @@ public class UserController {
     @GetMapping("/users")
     public String users(Model model, HttpSession session) {
         model.addAttribute("users", userService.findAll());
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setEmail("Гость");
-        }
-        model.addAttribute("user", user);
+        addAttributeUser(model, session);
         return "users";
     }
 

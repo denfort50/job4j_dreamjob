@@ -6,16 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.job4j.dream.model.Candidate;
-import ru.job4j.dream.model.User;
 import ru.job4j.dream.service.CandidateService;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import static ru.job4j.dream.controller.UserAttributeAdder.addAttributeUser;
 
 @ThreadSafe
 @Controller
@@ -30,12 +29,7 @@ public class CandidateController {
     @GetMapping("/candidates")
     public String candidates(Model model, HttpSession session) {
         model.addAttribute("candidates", candidateService.findAll());
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setEmail("Гость");
-        }
-        model.addAttribute("user", user);
+        addAttributeUser(model, session);
         return "candidates";
     }
 
