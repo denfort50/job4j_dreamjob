@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import javax.servlet.http.HttpSession;
-import static ru.job4j.dream.controller.UserAttributeAdder.addAttributeUser;
+import static ru.job4j.dream.util.UserAttributeAdder.addAttributeUser;
 
 @ThreadSafe
 @Controller

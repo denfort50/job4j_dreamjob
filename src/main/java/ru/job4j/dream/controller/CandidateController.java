@@ -14,7 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import static ru.job4j.dream.controller.UserAttributeAdder.addAttributeUser;
+import static ru.job4j.dream.util.UserAttributeAdder.addAttributeUser;
 
 @ThreadSafe
 @Controller

@@ -12,7 +12,7 @@ import ru.job4j.dream.model.Post;
 import ru.job4j.dream.service.CityService;
 import ru.job4j.dream.service.PostService;
 import javax.servlet.http.HttpSession;
-import static ru.job4j.dream.controller.UserAttributeAdder.addAttributeUser;
+import static ru.job4j.dream.util.UserAttributeAdder.addAttributeUser;
 
 @ThreadSafe
 @Controller

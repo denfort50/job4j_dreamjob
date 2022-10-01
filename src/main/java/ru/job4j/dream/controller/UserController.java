@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
-import static ru.job4j.dream.controller.UserAttributeAdder.addAttributeUser;
+import static ru.job4j.dream.util.UserAttributeAdder.addAttributeUser;
 
 @ThreadSafe
 @Controller
