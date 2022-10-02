@@ -13,16 +13,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Component
 public class AuthFilter implements Filter {
 
-    private final Set<String> mappings = new HashSet<>();
-
-    public AuthFilter() {
-        mappings.add("loginPage");
-        mappings.add("login");
-        mappings.add("formAddUser");
-        mappings.add("fail");
-        mappings.add("success");
-        mappings.add("registration");
-    }
+    private final Set<String> mappings =
+            new HashSet<>(Set.of("loginPage", "login", "formAddUser", "fail", "success", "registration"));
 
     @Override
     public void doFilter(
@@ -44,13 +36,6 @@ public class AuthFilter implements Filter {
     }
 
     private boolean mappingIsPresent(String uri) {
-        boolean result = false;
-        for (String mapping : mappings) {
-            if (uri.endsWith(mapping)) {
-                result = true;
-                break;
-            }
-        }
-        return result;
+        return mappings.stream().anyMatch(uri::endsWith);
     }
 }
